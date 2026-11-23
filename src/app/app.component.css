@@ -1,0 +1,9 @@
+.page {
+  padding: 24px 16px;
+}
+
+.tab-content {
+  display: flex;
+  justify-content: center;
+  padding: 24px 0;
+}

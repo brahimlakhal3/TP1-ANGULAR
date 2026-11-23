@@ -1,0 +1,35 @@
+.form-card {
+  width: 100%;
+  max-width: 520px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-top: 8px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.actions {
+  margin-top: 8px;
+}
+
+.recap {
+  margin-top: 20px;
+  padding: 16px;
+  border-radius: 8px;
+  background: #eaf1ff;
+  border: 1px solid #c4d7ff;
+}
+
+.recap h3 {
+  margin-top: 0;
+}
+
+.recap p {
+  margin: 6px 0;
+}

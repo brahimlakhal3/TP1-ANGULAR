@@ -1,0 +1,104 @@
+<mat-card class="form-card" appearance="outlined">
+  <mat-card-header>
+    <mat-card-title>Formulaire d'inscription</mat-card-title>
+    <mat-card-subtitle>Approche Template-Driven (ngModel)</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <form #registrationForm="ngForm" (ngSubmit)="onSubmit(registrationForm)" class="form">
+      <mat-form-field appearance="outline">
+        <mat-label>Nom complet</mat-label>
+        <input
+          matInput
+          type="text"
+          name="fullName"
+          required
+          minlength="3"
+          [(ngModel)]="registration.fullName"
+          #fullName="ngModel"
+        />
+        @if (fullName.invalid && (fullName.dirty || fullName.touched)) {
+          <mat-error>
+            @if (fullName.hasError('required')) {
+              Le nom complet est obligatoire.
+            } @else if (fullName.hasError('minlength')) {
+              Saisissez au moins 3 caractères.
+            }
+          </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          type="email"
+          name="email"
+          required
+          email
+          [(ngModel)]="registration.email"
+          #email="ngModel"
+        />
+        @if (email.invalid && (email.dirty || email.touched)) {
+          <mat-error>
+            @if (email.hasError('required')) {
+              L'email est obligatoire.
+            } @else if (email.hasError('email')) {
+              Saisissez une adresse email valide.
+            }
+          </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Âge</mat-label>
+        <input
+          matInput
+          type="number"
+          name="age"
+          required
+          min="18"
+          [(ngModel)]="registration.age"
+          #age="ngModel"
+        />
+        @if (age.invalid && (age.dirty || age.touched)) {
+          <mat-error>
+            @if (age.hasError('required')) {
+              L'âge est obligatoire.
+            } @else if (age.hasError('min')) {
+              Vous devez avoir au moins 18 ans.
+            }
+          </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Pays</mat-label>
+        <mat-select name="country" required [(ngModel)]="registration.country" #country="ngModel">
+          @for (item of countries; track item) {
+            <mat-option [value]="item">{{ item }}</mat-option>
+          }
+        </mat-select>
+        @if (country.invalid && (country.dirty || country.touched)) {
+          <mat-error>Veuillez sélectionner un pays.</mat-error>
+        }
+      </mat-form-field>
+
+      <div class="actions">
+        <button mat-flat-button color="primary" type="submit" [disabled]="registrationForm.invalid">
+          S'inscrire
+        </button>
+      </div>
+    </form>
+
+    @if (submittedData; as data) {
+      <div class="recap" role="status">
+        <h3>Récapitulatif des données saisies</h3>
+        <p><strong>Nom complet :</strong> {{ data.fullName }}</p>
+        <p><strong>Email :</strong> {{ data.email }}</p>
+        <p><strong>Âge :</strong> {{ data.age }}</p>
+        <p><strong>Pays :</strong> {{ data.country }}</p>
+      </div>
+    }
+  </mat-card-content>
+</mat-card>

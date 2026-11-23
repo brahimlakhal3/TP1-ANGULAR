@@ -1,0 +1,80 @@
+<mat-card class="form-card" appearance="outlined">
+  <mat-card-header>
+    <mat-card-title>Formulaire d'inscription</mat-card-title>
+    <mat-card-subtitle>Approche Reactive Forms (FormGroup)</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()" class="form">
+      <mat-form-field appearance="outline">
+        <mat-label>Nom complet</mat-label>
+        <input matInput type="text" formControlName="fullName" />
+        @if (registrationForm.controls.fullName.invalid && registrationForm.controls.fullName.touched) {
+          <mat-error>
+            @if (registrationForm.controls.fullName.hasError('required')) {
+              Le nom complet est obligatoire.
+            } @else if (registrationForm.controls.fullName.hasError('minlength')) {
+              Saisissez au moins 3 caractères.
+            }
+          </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email" />
+        @if (registrationForm.controls.email.invalid && registrationForm.controls.email.touched) {
+          <mat-error>
+            @if (registrationForm.controls.email.hasError('required')) {
+              L'email est obligatoire.
+            } @else if (registrationForm.controls.email.hasError('email')) {
+              Saisissez une adresse email valide.
+            }
+          </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Âge</mat-label>
+        <input matInput type="number" formControlName="age" />
+        @if (registrationForm.controls.age.invalid && registrationForm.controls.age.touched) {
+          <mat-error>
+            @if (registrationForm.controls.age.hasError('required')) {
+              L'âge est obligatoire.
+            } @else if (registrationForm.controls.age.hasError('min')) {
+              Vous devez avoir au moins 18 ans.
+            }
+          </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Pays</mat-label>
+        <mat-select formControlName="country">
+          @for (item of countries; track item) {
+            <mat-option [value]="item">{{ item }}</mat-option>
+          }
+        </mat-select>
+        @if (registrationForm.controls.country.invalid && registrationForm.controls.country.touched) {
+          <mat-error>Veuillez sélectionner un pays.</mat-error>
+        }
+      </mat-form-field>
+
+      <div class="actions">
+        <button mat-flat-button color="primary" type="submit" [disabled]="registrationForm.invalid">
+          S'inscrire
+        </button>
+      </div>
+    </form>
+
+    @if (submittedData; as data) {
+      <div class="recap" role="status">
+        <h3>Récapitulatif des données saisies</h3>
+        <p><strong>Nom complet :</strong> {{ data.fullName }}</p>
+        <p><strong>Email :</strong> {{ data.email }}</p>
+        <p><strong>Âge :</strong> {{ data.age }}</p>
+        <p><strong>Pays :</strong> {{ data.country }}</p>
+      </div>
+    }
+  </mat-card-content>
+</mat-card>
